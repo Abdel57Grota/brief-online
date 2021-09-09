@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="utf-8">
+    <title>Brief</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link href="static/css/bootstrap-3.3.1.min.css" rel="stylesheet">
+    <link href="static/css/font-awesome-4.4.0.min.css" rel="stylesheet">
+    <link href="static/css/custom.css" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="http://cdn.datatables.net/1.10.11/css/jquery.dataTables.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" />
+    <link href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css" rel="stylesheet" />
+    <link href="https://cdn.datatables.net/buttons/1.7.1/css/buttons.dat" rel="stylesheet" />
+    <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.7.1/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.7.1/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.7.1/js/buttons.print.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.0.0/css/buttons.dataTables.min.css"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cabin:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+        rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cabin:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
+</head>
+
+<style>
+    /* body {text-align: center;} */
+    .container {
+
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+
+    body {
+        font-family: 'Cabin';
+        font-size: 14px;
+        font-weight: 600px;
+        line-height: 1.42857143;
+        color: #333;
+        background-color: #fff;
+
+    }
+
+    td {
+        width: 224px;
+        padding-left: 0px;
+        padding-right: 0px;
+        padding-top: 0px;
+        padding-bottom: 0px;
+    }
+
+    .table td,
+    .table th {
+        padding-right: 0px !important;
+        padding-top: 0px !important;
+        padding-bottom: 0px !important;
+        margin-top: 2px;
+    }
+
+    table.dataTable tbody th,
+    table.dataTable tbody td {
+        padding: 1px 1px !important;
+    }
+
+    .table-bordered {
+        border: 0px solid #dee2e6;
+    }
+
+    .table-bordered td,
+    .table-bordered th {
+        border: 0px solid #dee2e6;
+    }
+</style>
+
+<body style="font-family:'Cabin',sans-serif;font-size:15px;;font-weight:250;color:#000000;">
+    <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href=""><i class="fa fa-calculator"></i>Pavillon sala</a>
+            </div>
+            <div class="collapse navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <li><a href="index.html"> <i class="fa fa-home"></i>Dimensions page d'accueil</a></li>
+                    <li><a href="index2.html"><i class="fa fa-github-alt"></i> Dimensions page Vignoble</a></li>
+                    <li><a href="index3.html"><i class="fa fa-github-alt"></i> Dimensions page contact</a></li>
+
+                    <li><a href="index4.html"><i class="fa fa-github-alt"></i> Dimensions page acheteurs
+                            pro</a></li>
+                    <li class="active"><a href="index5.html"><i class="fa fa-github-alt"></i> Dimensions accueil pro</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <center>
+        <img src="images/logo.png" width="200" />
+    </center>
+
+    <div
+        style="font-family:'Cabin', sans-serif;font-size:42px;line-height:52px;font-weight:300;font-style:normal;color:#000000;text-decoration:none;letter-spacing:0px;">
+        <center>Pavillon <strong>SALA</strong></center>
+        <center><a href="https://www.pavillonsala.com/pages/accueil-pro"> <span
+                    style="font-family:'Cabin', sans-serif;font-size:24px;line-height:52px;font-weight:300;font-style:normal;color:#000000;text-decoration:none;letter-spacing:0px;">
+                    https://www.pavillonsala.com/pages/accueil-pro</span></a></center>
+    </div>
+
+
+    <div class="container">
+
+        <center>
+            <img src="home page pro.png" width="auto" />
+        </center>
+
+
+
+    </div> <!-- /container -->
+
+    <script src="static/js/jquery-1.11.0.min.js"></script>
+    <script src="static/js/bootstrap-3.3.1.min.js"></script>
+    <script src="static/js/jquery.table2execl.js"></script>
+    <script type="text/javascript" src="https://unpkg.com/xlsx@0.15.1/dist/xlsx.full.min.js"></script>
+
+
+
+
+
+</body>
+
+
+</html>

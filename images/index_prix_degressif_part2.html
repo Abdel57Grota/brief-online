@@ -1,0 +1,1195 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="utf-8">
+    <title>Calcul mensualité crédit (taux fixe)</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link href="static/css/bootstrap-3.3.1.min.css" rel="stylesheet">
+    <link href="static/css/font-awesome-4.4.0.min.css" rel="stylesheet">
+    <link href="static/css/custom.css" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="http://cdn.datatables.net/1.10.11/css/jquery.dataTables.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" />
+    <link href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css" rel="stylesheet" />
+    <link href="https://cdn.datatables.net/buttons/1.7.1/css/buttons.dat" rel="stylesheet" />
+    <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.7.1/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.7.1/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.7.1/js/buttons.print.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.0.0/css/buttons.dataTables.min.css"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cabin:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+        rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cabin:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
+    <style>
+        /* body {text-align: center;} */
+        /* .container{
+
+                       width:100% !important;
+                       max-width: 100% !important;
+                  }  */
+
+        body {
+            font-family: 'Cabin';
+            font-size: 14px;
+            font-weight: 600px;
+            line-height: 1.42857143;
+            color: #333;
+            background-color: #fff;
+
+        }
+
+        td {
+            width: 224px;
+            padding-left: 0px;
+            padding-right: 0px;
+            padding-top: 0px;
+            padding-bottom: 0px;
+        }
+
+        .table td,
+        .table th {
+            padding-right: 0px !important;
+            padding-top: 0px !important;
+            padding-bottom: 0px !important;
+            margin-top: 2px;
+        }
+
+        table.dataTable tbody th,
+        table.dataTable tbody td {
+            padding: 1px 1px !important;
+        }
+
+        .table-bordered {
+            border: 0px solid #dee2e6;
+        }
+
+        .table-bordered td,
+        .table-bordered th {
+            border: 0px solid #dee2e6;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href=""><i class="fa fa-calculator"></i> Promo</a>
+            </div>
+            <div class="collapse navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <li><a href="index.html"> <i class="fa fa-home"></i> 1.Calcul prix unitaire</a></li>
+                    <li class="active"><a href="index_prix_degressif_part.html"><i class="fa fa-github-alt"></i>
+                            2.Calcul
+                            prix dégressif</a></li>
+                    <li><a href="index_pro.html"><i class="fa fa-github-alt"></i> 3.Calcul Pro
+                        </a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <center>
+        <img src="images/logo.png" width="200" />
+    </center>
+
+    <div
+        style="font-family:'Cabin', sans-serif;font-size:42px;line-height:52px;font-weight:300;font-style:normal;color:#000000;text-decoration:none;letter-spacing:0px;">
+        <center>Pavillon <strong>SALA</strong></center>
+        <center><span
+                style="font-family:'Cabin', sans-serif;font-size:24px;line-height:52px;font-weight:300;font-style:normal;color:#000000;text-decoration:none;letter-spacing:0px;">
+                Une Nouvelle façon de travailler</span></center>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="hidden-xs col-md-12">
+                <h2 class="baseline">Calcul Promo Pavillion Sala</h2>
+                <hr>
+            </div>
+        </div>
+        <form id="calculator-form">
+            <div class="row">
+                <div class="form-group col-md-4">
+                    <label>Prix D'achat</label>
+                    <div class="input-group input-group-lg">
+                        <select class="form-control" id="prix_achat">
+                            <optgroup label="Vin Rouge">
+                                <option value="2.07">Bordeaux 2.07€</option>
+                                <option value="2.63">Bordeaux supérieur 2.63€</option>
+                                <option value="4.15">Bordeaux - Réserve 4.15€</option>
+                                <option value="7.55">St. Emilion Grand Cru 7.55€</option>
+                                <option value="13.04">Grand Cru Prestige 13.04€</option>
+                            </optgroup>
+                            <optgroup label="Vin Blanc">
+                                <option value="2.01">Entre-Deux-Mers 2.01€</option>
+                                <option value="2.03">Bordeaux Sauvignon 2.03€</option>
+                                <option value="6.87">Bordeaux supérieur 6.87€</option>
+                            </optgroup>
+                            <optgroup label="Vins Rosé">
+                                <option value="2.02">Bordeaux Rosé 2.02€</option>
+                            </optgroup>
+                        </select>
+                        <div class="input-group-addon">&euro;</div>
+                    </div>
+                </div>
+
+                <div class="form-group col-md-4">
+                    <label>Solde</label>
+                    <div class="input-group input-group-lg">
+                        <select class="form-control" id="Bouteilles_a_vendre">
+                            <option value="6">6</option>
+                            <option value="12">12</option>
+                            <option value="18">18</option>
+                            <option value="24">24</option>
+                            <option value="30">30</option>
+                            <option value="36">36</option>
+                            <option value="42">42</option>
+                            <option value="48">48</option>
+                            <option value="54">54</option>
+                        </select>
+                        <div class="input-group-addon">Nbr</div>
+                    </div>
+                </div>
+
+                <div class="form-group col-md-4">
+                    <label>Bouteilles Gratuites</label>
+                    <div class="input-group input-group-lg">
+                        <select class="form-control" id="Bouteilles_offertes">
+                            <option value="0">0</option>
+                            <option value="6">6</option>
+                            <option value="12">12</option>
+                            <option value="18">18</option>
+                            <option value="24">24</option>
+                            <option value="30">30</option>
+                            <option value="36">36</option>
+                            <option value="42">42</option>
+                            <option value="48">48</option>
+                            <option value="54">54</option>
+                        </select>
+                        <div class="input-group-addon">Nbr</div>
+                    </div>
+                </div>
+
+
+                <div class="form-group col-md-4">
+                    <label>Frais de Transport1</label>
+
+
+                    <div class="input-group input-group-lg">
+                        <select class="form-control" id="zone">
+                            <option value="0" selected>-- choisissez une Zone</option>
+                            <option value="1">Zone01</option>
+                            <option value="2">Zone02</option>
+                            <option value="3">Zone03</option>
+                            <option value="4">Zone04</option>
+                            <option value="5">Zone05</option>
+                            <option value="6">Zone06</option>
+                            <option value="7">Zone07</option>
+                            <option value="8">Zone08</option>
+                            <option value="9">Zone09</option>
+                            <option value="10">ZoneRP</option>
+                        </select>
+                        <div class="input-group-addon">&euro;</div>
+                    </div>
+                </div>
+
+
+
+                <div class="form-group col-xs-6 col-md-4">
+                    <label>Nombre de vente</label>
+                    <div class="input-group input-group-lg">
+                        <input type="text" class="form-control" id="Nombre_vente" value="1">
+                        <div class="input-group-addon">&euro;</div>
+                    </div>
+                </div>
+
+                <div class="form-group col-xs-6 col-md-4">
+                    <label>Adwords</label>
+                    <div class="input-group input-group-lg">
+                        <input type="text" class="form-control" id="ads">
+                        <div class="input-group-addon">&euro;</div>
+                    </div>
+                </div>
+
+                <div class="form-group col-xs-6 col-md-4">
+                    <label>Chéque Cadeau</label>
+                    <div class="input-group input-group-lg">
+                        <input type="text" class="form-control" id="cheque">
+                        <div class="input-group-addon">&euro;</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group col-xs-12">
+                <button type="button" class="btn btn-default btn-lg" onclick="promo();"><i class="fa fa-calculator"></i>
+                    Calculer</button>
+            </div>
+
+
+        </form>
+        <br><br><br>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Résultat</h3>
+            </div>
+            <div class="panel-body">
+                <p><b>Totale de Vente:</b> <span id="marge"></span>&euro;</p>
+            </div>
+
+        </div>
+
+        <div class="table-responsive">
+            <div align="center">
+                <div id="example_wrapper" class="dataTables_wrapper">
+                    <table id="MYTABLE" class="display nowrap dataTable table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Produit</th>
+                                <th>Prix D'achat</th>
+                                <th>Prix De Vente</th>
+                                <th>Btls_a_vendre </th>
+                                <th>Btls_offertes</th>
+                                <th>Frais de Transport</th>
+                                <th>Moyenne Transport</th>
+                                <th>Écart transport</th>
+                                <th>Panier client</th>
+                                <th>CA (de le commande)</th>
+                                <th> Coût du stock</th>
+                                <th> Marge de la commande</th>
+                                <th>Marque %</th>
+                            </tr>
+                        </thead>
+                        <!-- //<tbody id="details">
+      //</tbody> -->
+                    </table>
+
+                </div>
+            </div>
+        </div>
+
+        <button class="btn btn-default btn-lg" onclick="ExportToExcel('xlsx')">
+            <span></span>
+            Telecharger la list
+        </button>
+
+    </div> <!-- /container -->
+    <script src="static/js/jquery-1.11.0.min.js"></script>
+    <script src="static/js/bootstrap-3.3.1.min.js"></script>
+    <script src="static/js/jquery.table2execl.js"></script>
+    <script type="text/javascript" src="https://unpkg.com/xlsx@0.15.1/dist/xlsx.full.min.js"></script>
+    <script>
+        function promo() {
+
+            var prix_vente = 0;
+            var frais_zone = 0;
+            var Moyenne_frais_zone = 0;
+
+            var prix_achat = Number(document.getElementById('prix_achat').value);
+            var Bouteilles_a_vendre = Number(document.getElementById('Bouteilles_a_vendre').value);
+            var Bouteilles_offertes = Number(document.getElementById('Bouteilles_offertes').value);
+            var zone = Number(document.getElementById('zone').value);
+            var ads = Number(document.getElementById('ads').value);
+            var cheque = Number(document.getElementById('cheque').value);
+            var Nombre_vente = Number(document.getElementById('Nombre_vente').value);
+            var Total_bouteilles = Bouteilles_a_vendre + Bouteilles_offertes;
+
+
+
+            //   if (Bouteilles_a_vendre < 12) {
+
+            //     confirm("Veuillez Commencer à partir de 12");
+            //     location.reload();
+
+            //   }
+
+            //var  Frais_Transport=Number (document.getElementById('Frais_Transport').value) ;
+            var zone = Number(document.getElementById('zone').value);
+
+
+            switch (prix_achat) {
+                case 2.07:
+                    var produit = 'bordeaux'
+                    if (Bouteilles_a_vendre >= 6 && Bouteilles_a_vendre <= 12) {
+                        prix_vente = 4.42
+                    }
+                    if (Bouteilles_a_vendre >= 18 && Bouteilles_a_vendre <= 30) {
+                        prix_vente = 4.13
+                    }
+                    if (Bouteilles_a_vendre >= 36 && Bouteilles_a_vendre <= 54) {
+                        prix_vente = 4.04
+                    }
+                    if (Bouteilles_a_vendre >= 60) {
+                        prix_vente = 3.75
+                    }
+
+
+                    break;
+                case 2.63:
+                    var produit = 'Bordeaux supérieur'
+                    if (Bouteilles_a_vendre >= 6 && Bouteilles_a_vendre <= 12) {
+                        prix_vente = 6.50
+                    }
+                    if (Bouteilles_a_vendre >= 18 && Bouteilles_a_vendre <= 30) {
+                        prix_vente = 5.88
+                    }
+                    if (Bouteilles_a_vendre >= 36 && Bouteilles_a_vendre <= 54) {
+                        prix_vente = 5.67
+                    }
+                    if (Bouteilles_a_vendre >= 60) {
+                        prix_vente = 4.99
+                    }
+
+
+                    break;
+                case 4.15:
+                    var produit = 'Bordeaux - Réserve'
+                    if (Bouteilles_a_vendre >= 6 && Bouteilles_a_vendre <= 12) {
+                        prix_vente = 10.04
+                    }
+                    if (Bouteilles_a_vendre >= 18 && Bouteilles_a_vendre <= 30) {
+                        prix_vente = 9.00
+                    }
+                    if (Bouteilles_a_vendre >= 36 && Bouteilles_a_vendre <= 54) {
+                        prix_vente = 8.21
+                    }
+                    if (Bouteilles_a_vendre >= 60) {
+                        prix_vente = 7.42
+                    }
+
+                    break;
+                case 7.55:
+                    var produit = 'St. Emilion Grand Cru'
+                    if (Bouteilles_a_vendre >= 6 && Bouteilles_a_vendre <= 12) {
+                        prix_vente = 15.88
+                    }
+                    if (Bouteilles_a_vendre >= 18 && Bouteilles_a_vendre <= 30) {
+                        prix_vente = 15.42
+                    }
+                    if (Bouteilles_a_vendre >= 36 && Bouteilles_a_vendre <= 54) {
+                        prix_vente = 15.04
+                    }
+                    if (Bouteilles_a_vendre >= 60) {
+                        prix_vente = 14.16
+                    }
+
+                    break;
+                case 13.04:
+                    var produit = 'Grand Cru Prestige'
+                    if (Bouteilles_a_vendre >= 6 && Bouteilles_a_vendre <= 12) {
+                        prix_vente = 15.88
+                    }
+                    if (Bouteilles_a_vendre >= 18 && Bouteilles_a_vendre <= 30) {
+                        prix_vente = 15.42
+                    }
+                    if (Bouteilles_a_vendre >= 36 && Bouteilles_a_vendre <= 54) {
+                        prix_vente = 15.04
+                    }
+                    if (Bouteilles_a_vendre >= 60) {
+                        prix_vente = 14.16
+                    }
+
+                    break;
+                case 2.01:
+                    var produit = 'Entre-Deux-Mers'
+                    if (Bouteilles_a_vendre >= 6 && Bouteilles_a_vendre <= 12) {
+                        prix_vente = 4.13
+                    }
+                    if (Bouteilles_a_vendre >= 18 && Bouteilles_a_vendre <= 30) {
+                        prix_vente = 4.00
+                    }
+                    if (Bouteilles_a_vendre >= 36 && Bouteilles_a_vendre <= 54) {
+                        prix_vente = 3.75
+                    }
+                    if (Bouteilles_a_vendre >= 60) {
+                        prix_vente = 4.10
+                    }
+
+                    break;
+                case 2.03:
+                    var produit = 'Bordeaux Sauvignon'
+                    if (Bouteilles_a_vendre >= 6 && Bouteilles_a_vendre <= 12) {
+                        prix_vente = 4.13
+                    }
+                    if (Bouteilles_a_vendre >= 18 && Bouteilles_a_vendre <= 30) {
+                        prix_vente = 4.00
+                    }
+                    if (Bouteilles_a_vendre >= 36 && Bouteilles_a_vendre <= 54) {
+                        prix_vente = 3.75
+                    }
+                    if (Bouteilles_a_vendre >= 60) {
+                        prix_vente = 4.10
+                    }
+
+                    break;
+                case 6.87:
+                    var produit = 'Bordeaux supérieur'
+                    if (Bouteilles_a_vendre >= 6 && Bouteilles_a_vendre <= 12) {
+                        prix_vente = 11.33
+                    }
+                    if (Bouteilles_a_vendre >= 18 && Bouteilles_a_vendre <= 30) {
+                        prix_vente = 10.67
+                    }
+                    if (Bouteilles_a_vendre >= 36 && Bouteilles_a_vendre <= 54) {
+                        prix_vente = 10.42
+                    }
+                    if (Bouteilles_a_vendre >= 60) {
+                        prix_vente = 9.96
+                    }
+                    break;
+                case 2.02:
+                    var produit = 'Bordeaux Rosé'
+                    if (Bouteilles_a_vendre >= 6 && Bouteilles_a_vendre <= 12) {
+                        prix_vente = 4.13
+                    }
+                    if (Bouteilles_a_vendre >= 18 && Bouteilles_a_vendre <= 30) {
+                        prix_vente = 4.00
+                    }
+                    if (Bouteilles_a_vendre >= 36 && Bouteilles_a_vendre <= 54) {
+                        prix_vente = 3.75
+                    }
+                    if (Bouteilles_a_vendre >= 60) {
+                        prix_vente = 3.42
+                    }
+                    break;
+
+
+
+            }
+
+            switch (zone) {
+                case 1:
+                    //document.getElementById('prix_vente').value = 2 
+                    if (Total_bouteilles >= 1 && Total_bouteilles <= 6) {
+                        frais_zone = 13.86;
+                        Moyenne_frais_zone = 20.48;
+                    }
+                    // ----------------------------------------------------
+                    if (Total_bouteilles >= 7 && Total_bouteilles <= 12) {
+                        frais_zone = 14.56;
+                        Moyenne_frais_zone = 21.73;
+                    }
+                    // ----------------------------------------------------
+                    if (Total_bouteilles >= 13 && Total_bouteilles <= 24) {
+                        frais_zone = 16.44;
+                        Moyenne_frais_zone = 24.96;
+                    }
+                    // ----------------------------------------------------
+                    if (Total_bouteilles >= 25 && Total_bouteilles <= 36) {
+                        frais_zone = 18.35;
+                        Moyenne_frais_zone = 29.06;
+                    }
+                    // ----------------------------------------------------
+                    if (Total_bouteilles >= 37 && Total_bouteilles <= 48) {
+                        frais_zone = 20.26;
+                        Moyenne_frais_zone = 35.60;
+                    }
+                    // ----------------------------------------------------
+                    if (Total_bouteilles >= 49 && Total_bouteilles <= 60) {
+                        frais_zone = 21.17;
+                        Moyenne_frais_zone = 35.60;
+                    }
+                    // ----------------------------------------------------
+                    if (Total_bouteilles >= 61 && Total_bouteilles <= 72) {
+                        frais_zone = 23.49
+                        Moyenne_frais_zone = 40.69;
+                    }
+                    // ----------------------------------------------------
+                    if (Total_bouteilles >= 73 && Total_bouteilles <= 84) {
+                        frais_zone = 25.85;
+                        Moyenne_frais_zone = 46.23;
+                    }
+                    // ----------------------------------------------------
+                    if (Total_bouteilles >= 85 && Total_bouteilles <= 96) {
+                        frais_zone = 27.85;
+                        Moyenne_frais_zone = 50.67;
+                    }
+                    // ----------------------------------------------------
+                    if (Total_bouteilles >= 96 && Total_bouteilles < 200) {
+                        frais_zone = 0.26 * Total_bouteilles;
+                        Moyenne_frais_zone = 0.55 * Total_bouteilles;
+
+                    }
+                    // ----------------------------------------------------
+                    if (Total_bouteilles >= 200 && Total_bouteilles < 300) {
+                        frais_zone = 0.24 * Total_bouteilles;
+                        Moyenne_frais_zone = 0.51 * Total_bouteilles;
+
+                    }
+                    // ----------------------------------------------------
+                    if (Total_bouteilles >= 300) {
+                        frais_zone = 0.23 * Total_bouteilles;
+                        Moyenne_frais_zone = 0.50 * Total_bouteilles;
+                    }
+                    // ----------------------------------------------------
+                    // ----------------------------------------------------
+                    // ----------------------------------------------------
+                    // ----------------------------------------------------
+                    // ----------------------------------------------------
+                    break;
+                case 2:
+                    if (Total_bouteilles >= 1 && Total_bouteilles <= 6) {
+                        frais_zone = 18.74;
+                        Moyenne_frais_zone = 20.48;
+                    }
+                    // ----------------------------------------------------
+                    if (Total_bouteilles >= 7 && Total_bouteilles <= 12) {
+                        frais_zone = 19.14;
+                        Moyenne_frais_zone = 21.73;
+                    }
+                    // ----------------------------------------------------
+                    if (Total_bouteilles >= 13 && Total_bouteilles <= 24) {
+                        frais_zone = 21.46;
+                        Moyenne_frais_zone = 24.96;
+
+                    }
+                    // ----------------------------------------------------
+                    if (Total_bouteilles >= 25 && Total_bouteilles <= 36) {
+                        frais_zone = 24.43;
+                        Moyenne_frais_zone = 29.06;
+                    }
+                    // ----------------------------------------------------
+                    if (Total_bouteilles >= 37 && Total_bouteilles <= 48) {
+                        frais_zone = 27.42;
+                        Moyenne_frais_zone = 35.60;
+
+                    }
+                    // ----------------------------------------------------
+                    if (Total_bouteilles >= 49 && Total_bouteilles <= 60) {
+                        frais_zone = 30.24;
+                        Moyenne_frais_zone = 35.60;
+                    }
+                    // ----------------------------------------------------
+                    if (Total_bouteilles >= 61 && Total_bouteilles <= 72) {
+                        frais_zone = 33.48;
+                        Moyenne_frais_zone = 40.69;
+                    }
+                    if (Total_bouteilles >= 73 && Total_bouteilles <= 84) {
+                        frais_zone = 37.57;
+                        Moyenne_frais_zone = 46.23;
+                    }
+                    // ----------------------------------------------------
+                    if (Total_bouteilles >= 85 && Total_bouteilles <= 96) {
+                        frais_zone = 40.74;
+                        Moyenne_frais_zone = 50.67;
+                    }
+                    // ----------------------------------------------------
+                    if (Total_bouteilles >= 96 && Total_bouteilles < 200) {
+                        frais_zone = 0.38 * Total_bouteilles;
+                        Moyenne_frais_zone = 0.55 * Total_bouteilles;
+                    }
+                    // ----------------------------------------------------
+                    if (Total_bouteilles >= 200 && Total_bouteilles < 300) {
+                        frais_zone = 0.35 * Total_bouteilles;;
+                        Moyenne_frais_zone = 0.51 * Total_bouteilles;
+                    }
+                    // ----------------------------------------------------
+                    if (Total_bouteilles >= 300) {
+                        frais_zone = 0.34 * Total_bouteilles;;
+                        Moyenne_frais_zone = 0.50 * Total_bouteilles;
+                    }
+                    // ----------------------------------------------------
+                    // ----------------------------------------------------
+                    // ----------------------------------------------------
+                    // ----------------------------------------------------
+                    // ----------------------------------------------------
+                    // ----------------------------------------------------
+                    break;
+                case 3:
+                    if (Total_bouteilles >= 1 && Total_bouteilles <= 6) {
+                        frais_zone = 19.55;
+                        Moyenne_frais_zone = 20.48;
+                    }
+                    // ----------------------------------------------------
+                    if (Total_bouteilles >= 7 && Total_bouteilles <= 12) {
+                        frais_zone = 20.16;
+                        Moyenne_frais_zone = 21.73;
+                    }
+                    // ----------------------------------------------------
+                    if (Total_bouteilles >= 13 && Total_bouteilles <= 24) {
+                        frais_zone = 23.54;
+                        Moyenne_frais_zone = 24.96;
+                    }
+                    // ----------------------------------------------------
+                    if (Total_bouteilles >= 25 && Total_bouteilles <= 36) {
+                        frais_zone = 27.28;
+                        Moyenne_frais_zone = 29.06;
+                    }
+                    // ----------------------------------------------------
+                    if (Total_bouteilles >= 37 && Total_bouteilles <= 48) {
+                        frais_zone = 31.84;
+                        Moyenne_frais_zone = 35.60;
+                    }
+                    // ----------------------------------------------------
+                    if (Total_bouteilles >= 49 && Total_bouteilles <= 60) {
+                        frais_zone = 34.49;
+                        Moyenne_frais_zone = 35.60;
+                    }
+                    // ----------------------------------------------------
+                    if (Total_bouteilles >= 61 && Total_bouteilles <= 72) {
+                        frais_zone = 38.81;
+                        Moyenne_frais_zone = 40.69;
+                    }
+                    // ----------------------------------------------------
+                    if (Total_bouteilles >= 73 && Total_bouteilles <= 84) {
+                        frais_zone = 44.11;
+                        Moyenne_frais_zone = 46.23;
+                    }
+                    // ----------------------------------------------------
+                    if (Total_bouteilles >= 85 && Total_bouteilles <= 96) {
+                        frais_zone = 48.28;
+                        Moyenne_frais_zone = 50.67;
+                    }
+                    // ----------------------------------------------------
+                    if (Total_bouteilles >= 96 && Total_bouteilles < 200) {
+                        frais_zone = 0.45 * Total_bouteilles;
+                        Moyenne_frais_zone = 0.55 * Total_bouteilles;
+                    }
+                    // ----------------------------------------------------
+                    if (Total_bouteilles >= 200 && Total_bouteilles < 300) {
+                        frais_zone = 0.41 * Total_bouteilles;
+                        Moyenne_frais_zone = 0.51 * Total_bouteilles;
+                    }
+                    // ----------------------------------------------------
+                    if (Total_bouteilles >= 300) {
+                        frais_zone = 0.40 * Total_bouteilles;
+                        Moyenne_frais_zone = 0.50 * Total_bouteilles;
+                    }
+                    // ----------------------------------------------------
+                    // ----------------------------------------------------
+                    // ----------------------------------------------------
+                    // ----------------------------------------------------
+                    // ----------------------------------------------------
+                    break;
+                case 4:
+                    if (Total_bouteilles >= 1 && Total_bouteilles <= 6) {
+                        frais_zone = 19.88;
+                        Moyenne_frais_zone = 20.48;
+                    }
+                    // ----------------------------------------------------
+                    if (Total_bouteilles >= 7 && Total_bouteilles <= 12) {
+                        frais_zone = 21.21;
+                        Moyenne_frais_zone = 21.73;
+                    }
+                    // ----------------------------------------------------
+                    if (Total_bouteilles >= 13 && Total_bouteilles <= 24) {
+                        frais_zone = 24.30;
+                        Moyenne_frais_zone = 24.96;
+                    }
+                    // ----------------------------------------------------
+                    if (Total_bouteilles >= 25 && Total_bouteilles <= 36) {
+                        frais_zone = 28.28;
+                        Moyenne_frais_zone = 29.06;
+                    }
+                    // ----------------------------------------------------
+                    if (Total_bouteilles >= 37 && Total_bouteilles <= 48) {
+                        frais_zone = 32.27;
+                        Moyenne_frais_zone = 35.60;
+                    }
+                    // ----------------------------------------------------
+                    if (Total_bouteilles >= 49 && Total_bouteilles <= 60) {
+                        frais_zone = 34.63;
+                        Moyenne_frais_zone = 35.60;
+                    }
+                    // ----------------------------------------------------
+                    if (Total_bouteilles >= 61 && Total_bouteilles <= 72) {
+                        frais_zone = 39.14;
+                        Moyenne_frais_zone = 40.69;
+                    }
+                    // ----------------------------------------------------
+                    if (Total_bouteilles >= 73 && Total_bouteilles <= 84) {
+                        frais_zone = 45.66;
+                        Moyenne_frais_zone = 46.23;
+                    }
+                    // ----------------------------------------------------
+                    if (Total_bouteilles >= 85 && Total_bouteilles <= 96) {
+                        frais_zone = 56.60;
+                        Moyenne_frais_zone = 50.67;
+                    }
+                    // ----------------------------------------------------
+                    if (Total_bouteilles >= 96 && Total_bouteilles < 200) {
+                        frais_zone = 0.47 * Total_bouteilles;
+                        Moyenne_frais_zone = 0.55 * Total_bouteilles;
+                    }
+                    // ----------------------------------------------------
+                    if (Total_bouteilles >= 200 && Total_bouteilles < 300) {
+                        frais_zone = 0.45 * Total_bouteilles;
+                        Moyenne_frais_zone = 0.51 * Total_bouteilles;
+                    }
+                    // ----------------------------------------------------
+                    if (Total_bouteilles >= 300) {
+                        frais_zone = 0.43 * Total_bouteilles;
+                        Moyenne_frais_zone = 0.50 * Total_bouteilles;
+                    }
+                    // ----------------------------------------------------
+                    // ----------------------------------------------------
+                    // ----------------------------------------------------
+                    // ----------------------------------------------------
+                    // ----------------------------------------------------
+                    break;
+                case 5:
+                    if (Total_bouteilles >= 1 && Total_bouteilles <= 6) {
+                        frais_zone = 20.30;
+                        Moyenne_frais_zone = 20.48;
+                    }
+                    // ----------------------------------------------------
+                    if (Total_bouteilles >= 7 && Total_bouteilles <= 12) {
+                        frais_zone = 22.10;
+                        Moyenne_frais_zone = 21.73;
+                    }
+                    // ----------------------------------------------------
+                    if (Total_bouteilles >= 13 && Total_bouteilles <= 24) {
+                        frais_zone = 25.75;
+                        Moyenne_frais_zone = 24.96;
+                    }
+                    // ----------------------------------------------------
+                    if (Total_bouteilles >= 25 && Total_bouteilles <= 36) {
+                        frais_zone = 30.33;
+                        Moyenne_frais_zone = 29.06;
+                    }
+                    // ----------------------------------------------------
+                    if (Total_bouteilles >= 37 && Total_bouteilles <= 48) {
+                        frais_zone = 34.92;
+                        Moyenne_frais_zone = 35.60;
+                    }
+                    // ----------------------------------------------------
+                    if (Total_bouteilles >= 49 && Total_bouteilles <= 60) {
+                        frais_zone = 38.03;
+                        Moyenne_frais_zone = 35.60;
+                    }
+                    // ----------------------------------------------------
+                    if (Total_bouteilles >= 61 && Total_bouteilles <= 72) {
+                        frais_zone = 43.99;
+                        Moyenne_frais_zone = 40.69;
+                    }
+                    // ----------------------------------------------------
+                    if (Total_bouteilles >= 73 && Total_bouteilles <= 84) {
+                        frais_zone = 51.07;
+                        Moyenne_frais_zone = 46.23;
+
+                    }
+                    // ----------------------------------------------------
+                    if (Total_bouteilles >= 85 && Total_bouteilles <= 96) {
+                        frais_zone = 56.60;
+                        Moyenne_frais_zone = 50.67;
+                    }
+                    // ----------------------------------------------------
+                    if (Total_bouteilles >= 96 && Total_bouteilles < 200) {
+                        frais_zone = 0.53 * Total_bouteilles;
+                        Moyenne_frais_zone = 0.55 * Total_bouteilles;
+                    }
+                    // ----------------------------------------------------
+                    if (Total_bouteilles >= 200 && Total_bouteilles < 300) {
+                        frais_zone = 0.49 * Total_bouteilles;
+                        Moyenne_frais_zone = 0.51 * Total_bouteilles;
+                    }
+                    // ----------------------------------------------------
+                    if (Total_bouteilles >= 300) {
+                        frais_zone = 0.48 * Total_bouteilles;
+                        Moyenne_frais_zone = 0.50 * Total_bouteilles;
+                    }
+                    // ----------------------------------------------------
+                    // ----------------------------------------------------
+                    // ----------------------------------------------------
+                    // ----------------------------------------------------
+                    // ----------------------------------------------------
+                    // ----------------------------------------------------
+                    break;
+                case 6:
+                    if (Total_bouteilles >= 1 && Total_bouteilles <= 6) {
+                        frais_zone = 20.59;
+                        Moyenne_frais_zone = 20.48;
+                    }
+                    if (Total_bouteilles >= 7 && Total_bouteilles <= 12) {
+                        frais_zone = 22.54;
+                        Moyenne_frais_zone = 21.73;
+                    }
+                    if (Total_bouteilles >= 13 && Total_bouteilles <= 24) {
+                        frais_zone = 26.17;
+                        Moyenne_frais_zone = 24.96;
+                    }
+                    if (Total_bouteilles >= 25 && Total_bouteilles <= 36) {
+                        frais_zone = 30.78;
+                        Moyenne_frais_zone = 29.06;
+                    }
+                    if (Total_bouteilles >= 37 && Total_bouteilles <= 48) {
+                        frais_zone = 35.36;
+                        Moyenne_frais_zone = 35.60;
+                    }
+                    if (Total_bouteilles >= 49 && Total_bouteilles <= 60) {
+                        frais_zone = 39.35;
+                        Moyenne_frais_zone = 35.60;
+                    }
+                    if (Total_bouteilles >= 61 && Total_bouteilles <= 72) {
+                        frais_zone = 45.64;
+                        Moyenne_frais_zone = 40.69;
+                    }
+                    if (Total_bouteilles >= 73 && Total_bouteilles <= 84) {
+                        frais_zone = 52.42;
+                        Moyenne_frais_zone = 46.23;
+                    }
+                    if (Total_bouteilles >= 85 && Total_bouteilles <= 96) {
+                        frais_zone = 57.43;
+                        Moyenne_frais_zone = 50.67;
+                    }
+                    if (Total_bouteilles >= 96 && Total_bouteilles < 200) {
+                        frais_zone = 0.53 * Total_bouteilles;
+                        Moyenne_frais_zone = 0.55 * Total_bouteilles;
+                    }
+                    if (Total_bouteilles >= 200 && Total_bouteilles < 300) {
+                        frais_zone = 0.50 * Total_bouteilles;
+                        Moyenne_frais_zone = 0.51 * Total_bouteilles;
+                    }
+                    if (Total_bouteilles >= 300) {
+                        frais_zone = 0.48 * Total_bouteilles;
+                        Moyenne_frais_zone = 0.50 * Total_bouteilles;
+                    }
+                    break;
+                    // ----------------------------------------------------
+                    // ----------------------------------------------------
+                    // ----------------------------------------------------
+                    // ----------------------------------------------------
+                    // ----------------------------------------------------
+                    // ----------------------------------------------------
+
+                case 7:
+                    if (Total_bouteilles >= 1 && Total_bouteilles <= 6) {
+                        frais_zone = 21.36;
+                        Moyenne_frais_zone = 20.48;
+                    }
+                    // ----------------------------------------------------
+                    if (Total_bouteilles >= 7 && Total_bouteilles <= 12) {
+                        frais_zone = 23.27;
+                        Moyenne_frais_zone = 21.73;
+                    }
+                    // ----------------------------------------------------
+                    if (Total_bouteilles >= 13 && Total_bouteilles <= 24) {
+                        frais_zone = 26.79;
+                        Moyenne_frais_zone = 24.96;
+                    }
+                    // ----------------------------------------------------
+                    if (Total_bouteilles >= 25 && Total_bouteilles <= 36) {
+                        frais_zone = 31.49;
+                        Moyenne_frais_zone = 29.06;
+                    }
+                    // ----------------------------------------------------
+                    if (Total_bouteilles >= 37 && Total_bouteilles <= 48) {
+                        frais_zone = 36.21;
+                        Moyenne_frais_zone = 35.60;
+                    }
+                    // ----------------------------------------------------
+                    if (Total_bouteilles >= 49 && Total_bouteilles <= 60) {
+                        frais_zone = 39.55;
+                        Moyenne_frais_zone = 35.60;
+                    }
+                    // ----------------------------------------------------
+                    if (Total_bouteilles >= 61 && Total_bouteilles <= 72) {
+                        frais_zone = 45.85;
+                        Moyenne_frais_zone = 40.69;
+                    }
+                    // ----------------------------------------------------
+                    if (Total_bouteilles >= 73 && Total_bouteilles <= 84) {
+                        frais_zone = 52.47;
+                        Moyenne_frais_zone = 46.23;
+                    }
+                    // ----------------------------------------------------
+                    if (Total_bouteilles >= 85 && Total_bouteilles <= 96) {
+                        frais_zone = 57.54;
+                        Moyenne_frais_zone = 50.67;
+                    }
+                    // ----------------------------------------------------
+                    if (Total_bouteilles >= 96 && Total_bouteilles < 200) {
+                        frais_zone = 0.54 * Total_bouteilles;
+                        Moyenne_frais_zone = 0.55 * Total_bouteilles;
+                    }
+                    // ----------------------------------------------------
+                    if (Total_bouteilles >= 200 && Total_bouteilles < 300) {
+                        frais_zone = 0.50 * Total_bouteilles;
+                        Moyenne_frais_zone = 0.51 * Total_bouteilles;
+                    }
+                    // ----------------------------------------------------
+                    if (Total_bouteilles >= 300) {
+                        frais_zone = 0.49 * Total_bouteilles;
+                        Moyenne_frais_zone = 0.50 * Total_bouteilles;
+                    }
+                    break;
+                    // ----------------------------------------------------
+                    // ----------------------------------------------------
+                    // ----------------------------------------------------
+                    // ----------------------------------------------------
+                    // ----------------------------------------------------
+                    // ----------------------------------------------------
+                case 8:
+                    if (Total_bouteilles >= 1 && Total_bouteilles <= 6) {
+                        frais_zone = 22.22;
+                        Moyenne_frais_zone = 20.48;
+                    }
+                    if (Total_bouteilles >= 7 && Total_bouteilles <= 12) {
+                        frais_zone = 24.07;
+                        Moyenne_frais_zone = 21.73;
+                    }
+                    if (Total_bouteilles >= 13 && Total_bouteilles <= 24) {
+                        frais_zone = 27.78;
+                        Moyenne_frais_zone = 24.96;
+                    }
+                    if (Total_bouteilles >= 25 && Total_bouteilles <= 36) {
+                        frais_zone = 32.63;
+                        Moyenne_frais_zone = 29.06;
+                    }
+                    if (Total_bouteilles >= 37 && Total_bouteilles <= 48) {
+                        frais_zone = 37.52;
+                        Moyenne_frais_zone = 35.60;
+                    }
+                    if (Total_bouteilles >= 49 && Total_bouteilles <= 60) {
+                        frais_zone = 40.14;
+                        Moyenne_frais_zone = 35.60;
+                    }
+                    if (Total_bouteilles >= 61 && Total_bouteilles <= 72) {
+                        frais_zone = 46.77;
+                        Moyenne_frais_zone = 40.69;
+                    }
+                    if (Total_bouteilles >= 73 && Total_bouteilles <= 84) {
+                        frais_zone = 52.60;
+                        Moyenne_frais_zone = 46.23;
+                    }
+                    if (Total_bouteilles >= 85 && Total_bouteilles <= 96) {
+                        frais_zone = 58.24;
+                        Moyenne_frais_zone = 50.67;
+                    }
+                    if (Total_bouteilles >= 96 && Total_bouteilles < 200) {
+                        frais_zone = 0.55 * Total_bouteilles;
+                        Moyenne_frais_zone = 0.55 * Total_bouteilles;
+                    }
+                    if (Total_bouteilles >= 200 && Total_bouteilles < 300) {
+                        frais_zone = 0.51 * Total_bouteilles;
+                        Moyenne_frais_zone = 0.51 * Total_bouteilles;
+                    }
+                    if (Total_bouteilles >= 300) {
+                        frais_zone = 0.49 * Total_bouteilles;
+                        Moyenne_frais_zone = 0.50 * Total_bouteilles;
+                    }
+                    break;
+                    // ----------------------------------------------------
+                    // ----------------------------------------------------
+                    // ----------------------------------------------------
+                    // ----------------------------------------------------
+                    // ----------------------------------------------------
+                    // ----------------------------------------------------
+                case 9:
+                    if (Total_bouteilles >= 1 && Total_bouteilles <= 6) {
+                        frais_zone = 24.42;
+                        Moyenne_frais_zone = 20.48;
+                    }
+                    if (Total_bouteilles >= 7 && Total_bouteilles <= 12) {
+                        frais_zone = 26.00;
+                        Moyenne_frais_zone = 21.73;
+                    }
+                    if (Total_bouteilles >= 13 && Total_bouteilles <= 24) {
+                        frais_zone = 29.89;
+                        Moyenne_frais_zone = 24.96;
+                    }
+                    if (Total_bouteilles >= 25 && Total_bouteilles <= 36) {
+                        frais_zone = 35.13;
+                        Moyenne_frais_zone = 29.06;
+                    }
+                    if (Total_bouteilles >= 37 && Total_bouteilles <= 48) {
+                        frais_zone = 38.45;
+                        Moyenne_frais_zone = 35.60;
+                    }
+                    if (Total_bouteilles >= 49 && Total_bouteilles <= 60) {
+                        frais_zone = 41.26;
+                        Moyenne_frais_zone = 35.60;
+                    }
+                    if (Total_bouteilles >= 61 && Total_bouteilles <= 72) {
+                        frais_zone = 47.52;
+                        Moyenne_frais_zone = 40.69;
+                    }
+                    if (Total_bouteilles >= 73 && Total_bouteilles <= 84) {
+                        frais_zone = 54.06;
+                        Moyenne_frais_zone = 46.23;
+                    }
+                    if (Total_bouteilles >= 85 && Total_bouteilles <= 96) {
+                        frais_zone = 59.21;
+                        Moyenne_frais_zone = 50.67;
+                    }
+                    if (Total_bouteilles >= 96 && Total_bouteilles < 200) {
+                        frais_zone = 0.47 * Total_bouteilles;
+                        Moyenne_frais_zone = 0.55 * Total_bouteilles;
+                    }
+                    if (Total_bouteilles >= 200 && Total_bouteilles < 300) {
+                        frais_zone = 0.51 * Total_bouteilles;
+                        Moyenne_frais_zone = 0.51 * Total_bouteilles;
+                    }
+                    if (Total_bouteilles >= 300) {
+                        frais_zone = 0.50 * Total_bouteilles;
+                        Moyenne_frais_zone = 0.50 * Total_bouteilles;
+                    }
+                    break;
+                    // ----------------------------------------------------
+                    // ----------------------------------------------------
+                    // ----------------------------------------------------
+                    // ----------------------------------------------------
+                    // ----------------------------------------------------
+                    // ----------------------------------------------------
+                case 10:
+                    if (Total_bouteilles >= 1 && Total_bouteilles <= 6) {
+                        frais_zone = 23.91;
+                        Moyenne_frais_zone = 20.48;
+                    }
+                    if (Total_bouteilles >= 7 && Total_bouteilles <= 12) {
+                        frais_zone = 24.23;
+                        Moyenne_frais_zone = 21.73;
+                    }
+                    if (Total_bouteilles >= 13 && Total_bouteilles <= 24) {
+                        frais_zone = 27.51;
+                        Moyenne_frais_zone = 24.96;
+                    }
+                    if (Total_bouteilles >= 25 && Total_bouteilles <= 36) {
+                        frais_zone = 31.45;
+                        Moyenne_frais_zone = 29.06;
+                    }
+                    if (Total_bouteilles >= 37 && Total_bouteilles <= 48) {
+                        frais_zone = 35.39;
+                        Moyenne_frais_zone = 35.60;
+                    }
+                    if (Total_bouteilles >= 49 && Total_bouteilles <= 60) {
+                        frais_zone = 37.18;
+                        Moyenne_frais_zone = 35.60;
+                    }
+                    if (Total_bouteilles >= 61 && Total_bouteilles <= 72) {
+                        frais_zone = 42.19;
+                        Moyenne_frais_zone = 40.69;
+                    }
+                    if (Total_bouteilles >= 73 && Total_bouteilles <= 84) {
+                        frais_zone = 46.48;
+                        Moyenne_frais_zone = 46.23;
+                    }
+                    if (Total_bouteilles >= 85 && Total_bouteilles <= 96) {
+                        frais_zone = 49.92;
+                        Moyenne_frais_zone = 50.67;
+                    }
+                    if (Total_bouteilles >= 96 && Total_bouteilles < 200) {
+                        frais_zone = 46.47 * Total_bouteilles;
+                        Moyenne_frais_zone = 0.55 * Total_bouteilles;
+                    }
+                    if (Total_bouteilles >= 200 && Total_bouteilles < 300) {
+                        frais_zone = 0.44 * Total_bouteilles;
+                        Moyenne_frais_zone = 0.51 * Total_bouteilles;
+                    }
+                    if (Total_bouteilles >= 300) {
+                        frais_zone = 0.41 * Total_bouteilles;
+                        Moyenne_frais_zone = 0.50 * Total_bouteilles;
+                    }
+                    break;
+                    // ----------------------------------------------------
+                    // ----------------------------------------------------
+                    // ----------------------------------------------------
+                    // ----------------------------------------------------
+                    // ----------------------------------------------------
+                    // ----------------------------------------------------
+            }
+
+            var CA = ((prix_vente * Bouteilles_a_vendre) * Nombre_vente) + Moyenne_frais_zone;
+            var CACO = ((prix_vente * Bouteilles_a_vendre) * Nombre_vente);
+
+            var cout_stock = (Total_bouteilles * prix_achat) * Nombre_vente;
+
+            var cout_transport = frais_zone * Nombre_vente;
+            var charge = cout_stock + cout_transport + ads;
+
+
+
+            var sBouteilles_a_vendre = Bouteilles_a_vendre * Nombre_vente;
+            var sBouteilles_offertes = Bouteilles_offertes * Nombre_vente;
+            var sTotal_bouteilles = Total_bouteilles * Nombre_vente;
+
+
+            var table = document.getElementsByTagName('table')[0];
+
+            var EcartTR = Moyenne_frais_zone - frais_zone;
+
+
+            if (EcartTR < 0) {
+
+                var EcartTRS = -1 * EcartTR;
+
+            } else var EcartTRS = -1 * EcartTR;
+
+            var marge = CACO - - cout_stock - EcartTRS ;
+
+            var marque = (marge / CACO) * 100;
+
+            document.getElementById('marge').innerHTML = marge.toFixed(2);
+
+            var table = document.getElementsByTagName('table')[0];
+
+            var newRow = table.insertRow(1);
+            var cel1 = newRow.insertCell(0);
+            var cel2 = newRow.insertCell(1);
+            var cel3 = newRow.insertCell(2);
+            var cel4 = newRow.insertCell(3);
+            var cel5 = newRow.insertCell(4);
+            var cel6 = newRow.insertCell(5);
+            var cel7 = newRow.insertCell(6);
+            var cel8 = newRow.insertCell(7);
+            var cel9 = newRow.insertCell(8);
+            var cel10 = newRow.insertCell(9);
+            var cel11 = newRow.insertCell(10);
+
+            var cel12 = newRow.insertCell(11);
+
+            var cel13 = newRow.insertCell(12);
+
+            cel1.innerHTML = produit;
+            cel2.innerHTML = prix_achat;
+            cel3.innerHTML = prix_vente;
+            cel4.innerHTML = sBouteilles_a_vendre;
+            cel5.innerHTML = sBouteilles_offertes;
+            cel6.innerHTML = frais_zone;
+            cel7.innerHTML = Moyenne_frais_zone;
+            cel8.innerHTML = EcartTR.toFixed(2);
+
+            cel9.innerHTML = CA.toFixed(2);
+            cel10.innerHTML = CACO.toFixed(2);
+            cel11.innerHTML = cout_stock.toFixed(2);
+
+            cel12.innerHTML = marge.toFixed(2);
+
+            cel13.innerHTML = marque.toFixed(2);
+
+
+        }
+
+        function ExportToExcel(type, fn, dl) {
+            var elt = document.getElementById('MYTABLE');
+            var wb = XLSX.utils.table_to_book(elt, {
+                sheet: "sheet1"
+            });
+            return dl ?
+                XLSX.write(wb, {
+                    bookType: type,
+                    bookSST: true,
+                    type: 'base64'
+                }) :
+                XLSX.writeFile(wb, fn || ('list.' + (type || 'xlsx')));
+        }
+    </script>
+
+</body>
+
+</html>
